@@ -90,7 +90,7 @@ def scan_network(network_ip):
             if ip:  # Si l'IP est en ligne
                 online_hosts.append(ip)
             # Mise à jour de la barre de progression
-            sys.stdout.write(f"\rScan réseau : {i}/{total_ips} ({(i / total_ips) * 100:.2f}%) - Machines connectées : {len(online_hosts)}")
+            sys.stdout.write(f"\rScan réseau : {i}/{total_ips} ({(i / total_ips) * 100:.2f}%)")
             sys.stdout.flush()
 
     return online_hosts, network
@@ -165,12 +165,12 @@ port_scan_percentage = (machines_with_open_ports / len(machine_info)) * 100 if l
 
 # Générer un nom unique pour le fichier de scan
 timestamp = time.strftime('%Y%m%d_%H%M%S')
-file_path = os.path.join(output_dir, f'last_scan_{timestamp}.txt')
+file_path = os.path.join(output_dir, f'last_scan.txt')
 
 # Créer le fichier pour ce scan avec un nom unique
 with open(file_path, 'w', encoding='utf-8') as f:
     # Écrire la date de création
-    f.write(f"Date de création du fichier : {time.strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+    f.write(f"Date de création du fichier : {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
 
     # Ajouter le nombre total de machines
     f.write(f"\nTotal de machines connectées: {len(machine_info)}\n")
