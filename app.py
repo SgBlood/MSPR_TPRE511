@@ -33,7 +33,7 @@ class Application:
     # Function to fetch the version from GitHub API
     def fetch_version_from_github(self):
         try:
-            url = "https://api.github.com/repos/SgBlood/MSPR_TPRE511/releases/latest"
+            url = "https://github.com/SgBlood/MSPR_TPRE511/releases/latest"
             response = requests.get(url)
             response.raise_for_status()
             latest_release = response.json()
