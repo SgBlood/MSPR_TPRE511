@@ -5,6 +5,7 @@ from dashboard_page import DashboardPage
 from ping_page import PingPage
 import requests
 import time
+from home_page import HomePage
 
 # Function to handle GitHub version retrieval with error handling and caching
 class Application:
