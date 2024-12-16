@@ -18,25 +18,6 @@ def load_icon(path, size=(50, 50)):
         print(f"Error: {path} is missing.")
         return None
 
-
-# Function to get the version from a GitHub repository
-def get_version():
-    try:
-        url = "https://api.github.com/repos/username/repo/releases/latest"  # Replace with your repo URL
-        response = requests.get(url)
-        response.raise_for_status()  # Raise an exception for HTTP errors
-
-        latest_release = response.json()
-
-        # Check if 'tag_name' is in the response, otherwise return a default message
-        if 'tag_name' in latest_release:
-            return latest_release['tag_name']
-        else:
-            return "Unknown"
-    except requests.exceptions.RequestException as e:
-        print(f"GitHub Error: {e}")
-        return "Unknown"
-
 class HomePage:
     def __init__(self, root, app):  # Accepting the 'app' instance here
         self.root = root
