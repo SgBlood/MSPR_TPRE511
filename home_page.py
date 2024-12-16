@@ -3,7 +3,7 @@ from tkinter import font as tkfont
 from PIL import Image, ImageTk
 import os
 import requests
-
+from app import get_version
 # Function to load icons with error handling
 def load_icon(path, size=(50, 50)):
     """Function to load icons with error handling"""
