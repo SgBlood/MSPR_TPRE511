@@ -192,7 +192,7 @@ class StatsPage:
     def auto_refresh(self):
         """Automatically refresh the page every 10 seconds."""
         self.update_download_button()
-        self.root.after(10000, self.auto_refresh)  # Refresh every 10 seconds
+        self.root.after(30000, self.auto_refresh)  # Refresh every 10 seconds
 
     def show(self):
         """Display the Stats page."""

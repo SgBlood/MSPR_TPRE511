@@ -11,7 +11,7 @@ class Application:
         self.root = root
         
         # Define the directory for scan results (adjust this to the actual path)
-        self.scan_results_dir = "C:\\Users\\moi\\Documents\\GitHub\\MSPR_TPRE511\\"  # Replace this with the actual directory
+        self.scan_results_dir = "scans"  # Replace this with the actual directory
 
         # Initialize pages, including StatsPage, and pass scan_results_dir
         self.pages = {

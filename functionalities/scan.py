@@ -12,17 +12,16 @@ def ask_scan_choice():
     Display a menu of scan options for the user to choose from.
 
     Returns:
-        int: The user's choice (1-3).
+        int: The user's choice (1-2).
     """
     print("\nSelect a scan type:")
     print("1 - Scan a single IP address")
     print("2 - Scan a subnet based on your current IP")
-    print("3 - Exit the program")
     
-    # Ensure valid input (1-3)
-    choice = input("Enter your choice (1-3): ").strip()
-    while choice not in ['1', '2', '3']:
-        choice = input("Invalid choice. Please enter 1, 2, or 3: ").strip()
+    # Ensure valid input (1-2)
+    choice = input("Enter your choice (1-2): ").strip()
+    while choice not in ['1', '2']:
+        choice = input("Invalid choice. Please enter 1 or 2: ").strip()
 
     return int(choice)
 
@@ -99,23 +98,27 @@ def format_scan_results_for_txt(scan_results):
 
     return output
 
-def scan_network(network_range, output_file, progress_callback=None):
+def scan_network(network_range, output_folder, progress_callback=None):
     """
     Perform a network scan using nmap on the provided network range.
 
     Args:
         network_range (str): The network range or single IP to scan.
-        output_file (str): Path to save the scan results.
+        output_folder (str): The folder to save the scan results.
         progress_callback (function): Function to update progress (optional).
 
     Returns:
         dict: Scan results as a dictionary.
     """
     try:
+        # Create the output folder if it doesn't exist
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+
         # Initialize the nmap scanner
         nm = nmap.PortScanner()
         print(f"Scanning network: {network_range}...")
-        
+
         # Scan all ports (1-65535)
         nm.scan(hosts=network_range, arguments='-T4 -p 1-65535 --open')
 
@@ -126,9 +129,9 @@ def scan_network(network_range, output_file, progress_callback=None):
             return None
 
         # Generate a timestamp for the scan output filenames
-        current_time = datetime.now().strftime("%Y-%m-%d_%H")
-        output_file_json = f"{output_file}_{current_time}.json"
-        output_file_txt = f"{output_file}_{current_time}.txt"
+        current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        output_file_json = os.path.join(output_folder, f"{current_time}_scan_results.json")
+        output_file_txt = os.path.join(output_folder, f"{current_time}_scan_results.txt")
         
         # Prepare results
         scan_results = {'scan_time': current_time, 'network_range': network_range, 'hosts': []}
@@ -200,19 +203,14 @@ def main():
         if choice == 1:
             # Scan a single IP address
             ip_address = input("\nEnter the IP address to scan: ").strip()
-            scan_network(ip_address, 'single_ip_scan')
+            scan_network(ip_address, 'scans')  # Save to the 'scans' folder
 
         elif choice == 2:
             # Scan a subnet based on the current IP
             local_ip = get_local_ip()
             subnet = get_subnet_from_ip(local_ip)
             print(f"Detected subnet: {subnet}")
-            scan_network(subnet, 'subnet_scan')
-
-        elif choice == 3:
-            # Exit the program
-            print("Exiting the program. Goodbye!")
-            break
+            scan_network(subnet, 'scans')  # Save to the 'scans' folder
 
 # Run the program
 if __name__ == "__main__":
