@@ -1,20 +1,22 @@
 from tkinter import *
 from home_page import HomePage
 from stats_page import StatsPage
-from dashboard_page import DashboardPage
 from ping_page import PingPage
 import requests
 import time
-from home_page import HomePage
 
 # Function to handle GitHub version retrieval with error handling and caching
 class Application:
     def __init__(self, root):
         self.root = root
+        
+        # Define the directory for scan results (adjust this to the actual path)
+        self.scan_results_dir = "C:\\Users\\moi\\Documents\\GitHub\\MSPR_TPRE511\\"  # Replace this with the actual directory
+
+        # Initialize pages, including StatsPage, and pass scan_results_dir
         self.pages = {
             "home": HomePage(self.root, self),
-            "stats": StatsPage(self.root, self),
-            "dashboard": DashboardPage(self.root, self),
+            "stats": StatsPage(self.root, self, self.scan_results_dir),  # Pass scan_results_dir here
             "ping": PingPage(self.root, self)
         }
         self.last_version_check = 0
@@ -60,9 +62,6 @@ class Application:
 
     def show_stats_page(self):
         self.show_page("stats")
-
-    def show_dashboard_page(self):
-        self.show_page("dashboard")
 
     def show_ping_page(self):
         self.show_page("ping")
